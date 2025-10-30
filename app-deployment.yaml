@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1 # Un solo Pod de la aplicación
+  selector:
+    matchLabels:
+      app: mi-app
+  template:
+    metadata:
+      labels:
+        app: mi-app
+    spec:
+      containers:
+        - name: app
+          image: tu_usuario/app-reto:v1 # La imagen que creaste en el Paso 5
+          ports:
+            - containerPort: 5000
