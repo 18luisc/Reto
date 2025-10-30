@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: luceroluis/app-reto:v1 # La imagen que creaste en el Paso 5
+          image: luceroluis/app-reto:v2 # La imagen que creaste en el Paso 5
           ports:
             - containerPort: 5000
