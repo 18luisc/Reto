@@ -3,7 +3,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-# --- Configuración de Conexión a la BD (usando el nombre del Service) ---
+# Configuración de Conexión a la BD (usando el nombre del Service) 
 DB_HOST = "postgres-service"
 DB_NAME = "appdb"
 DB_USER = "user"
@@ -21,7 +21,7 @@ def get_db_connection():
     )
     return conn
 
-# --- RUTA 1: CREACIÓN DE REGISTROS (POST) ---
+#RUTA 1: CREACIÓN DE REGISTROS (POST)
 @app.route('/productos', methods=['POST'])
 def crear_producto():
     data = request.get_json()
@@ -48,7 +48,7 @@ def crear_producto():
         if conn:
             conn.close()
 
-# --- RUTA 2: CONSULTA DE DATOS (GET) ---
+# RUTA 2: CONSULTA DE DATOS (GET) 
 @app.route('/productos', methods=['GET'])
 def obtener_productos():
     conn = None

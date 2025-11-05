@@ -6,6 +6,6 @@ spec:
   selector:
     app: mi-app
   ports:
-    - port: 80 # Puerto que usas para acceder
+    - port: 80 # Puerto que se usa para acceder
       targetPort: 5000 # Puerto interno de Flask (containerPort)
-  type: LoadBalancer # O NodePort si estás en un entorno local (MiniKube)
+  type: LoadBalancer # O NodePort si estamos en un entorno local (MiniKube)
