@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: app-container
-          # Se debe revisar que esta imagen ya esté construida DENTRO de Minikube
-          image: mi-app-crud:latest 
+          image: luceroluis/app-reto:v2 
           ports:
             - containerPort: 5000 # Puerto que usa tu Flask app
           env:
