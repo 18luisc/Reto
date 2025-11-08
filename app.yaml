@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: crud-namespace # En el namespace
+  labels:
+    app: app-frontend
+spec:
+  replicas: 2 # Esto crea el Pod 2 y el Pod 3
+  selector:
+    matchLabels:
+      app: app-frontend
+  template:
+    metadata:
+      labels:
+        app: app-frontend
+    spec:
+      containers:
+        - name: app-container
+          # Se debe revisar que esta imagen ya esté construida DENTRO de Minikube
+          image: mi-app-crud:latest 
+          ports:
+            - containerPort: 5000 # Puerto que usa tu Flask app
+          env:
+            # Las variables de conexión a la BD
+            - name: DB_HOST
+              value: "postgres-service"
+            - name: DB_NAME
+              value: "appdb"
+            - name: DB_USER
+              value: "user"
+            - name: DB_PASS
+              value: "mypassword"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-frontend
+  namespace: crud-namespace # En el namespace
+spec:
+  selector:
+    app: app-frontend
+  ports:
+    - protocol: TCP
+      port: 80 # Puerto que exponemos
+      targetPort: 5000 # Puerto interno del contenedor
+  type: LoadBalancer # CRUCIAL: Actúa como Balanceador de Carga
