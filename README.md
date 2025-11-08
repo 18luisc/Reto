@@ -22,3 +22,7 @@ Estructura del Proyecto:
 # Entorno Virtual
 1. python -m venv venv
 2. .\venv\Scripts\activate
+
+# Iniciar Minikube
+minikube start
+
