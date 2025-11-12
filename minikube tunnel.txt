@@ -1,0 +1,45 @@
+
+# 1. PARAR minikube tunnel (si está corriendo)
+# Presiona Ctrl+C en la terminal donde está corriendo
+
+# 2. NAVEGAR a la carpeta App
+cd ~/Desktop/PARALELAS_LUIS/Reto/App
+
+# 3. RECONSTRUIR y PUSHEAR la nueva imagen Docker
+docker build -t luceroluis/app-reto:v3 .
+docker push luceroluis/app-reto:v3
+
+# 4. VOLVER a la carpeta Reto (donde están los YAML)
+cd ..
+
+# 5. ACTUALIZAR la imagen en el deployment
+kubectl set image deployment/app-deployment -n crud-namespace app-container=luceroluis/app-reto:v3
+
+# 6. CREAR la tabla en PostgreSQL (mientras se actualiza la app)
+kubectl exec -n crud-namespace postgres-db -- psql -U user -d appdb -c "
+CREATE TABLE IF NOT EXISTS productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL
+);"
+
+# 7. REINICIAR minikube tunnel (nueva terminal)
+minikube tunnel
+
+# 8. VERIFICAR el estado (en otra terminal)
+kubectl get pods -n crud-namespace -w
+
+# 9. Cuando los pods estén READY, probar la aplicación
+kubectl wait --for=condition=ready pod -n crud-namespace -l app=app-frontend --timeout=120s
+
+# 10. OBTENER la URL para Postman
+minikube service -n crud-namespace app-frontend --url
+
+# 11. PROBAR los endpoints
+curl http://192.168.59.101:32299/productos
+
+
+kubectl set image deployment/app-deployment -n crud-namespace app-container=luceroluis/app-reto:v3
+
+
+
