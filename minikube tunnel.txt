@@ -43,3 +43,7 @@ kubectl set image deployment/app-deployment -n crud-namespace app-container=luce
 
 
 
+
+en caso de la ip no reciba; kubectl patch service -n crud-namespace app-frontend --type='json' -p='[{"op": "add", "path": "/spec/externalIPs", "value": ["100.72.75.98"]}]'
+
+//ip maquina destino
